@@ -7,10 +7,25 @@ window.onscroll = function () {
   changeHeaderClass()
 }
 
+let allProducts = [];
+async function getProducts() {
+  allProducts = await (cameraService.collection);
+  console.log(allProducts);
+  return allProducts;
+}
+
+let allAvailableProducts = getProducts();
+
+console.log(allProducts);
+console.log(allAvailableProducts);
+
+
+
 const cameraDisplay = document.getElementById("mainCameraDisplay");
 
-function displayProducts(allProducts) {
-  for (let camera of allProducts) {
+async function displayProducts(allAvailableProducts) {
+  for (let camera of allAvailableProducts) {
+    
     const name = camera.name;
     const price = camera.price;
     const image = camera.imageUrl;
@@ -54,16 +69,10 @@ function displayProducts(allProducts) {
     }	  
   }
 
-
-// let allProducts;
 // async function getProducts() {
-//   return allProducts = await (cameraService.collection);
+//   displayProducts(await cameraService.collection);
 // }
-// displayProducts(allProducts);
-
-   
-async function getProducts() {
-  displayProducts(await cameraService.collection);
-}
  
 getProducts();
+displayProducts(allProducts);
+
