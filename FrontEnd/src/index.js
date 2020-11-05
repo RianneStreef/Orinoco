@@ -46,7 +46,7 @@ async function displayProducts() {
       const buttonContainer = document.createElement('div')
       const button = document.createElement('button')
         button.className = "button";
-        button.setAttribute("onclick",`location.href='product.html?id=${id}'`);
+        button.setAttribute("onclick",`location.href='product/index.html?id=${id}'`);
 
       textContainer.classList.add('product-card__text');
       nameContainer.classList.add('product-card__name');
@@ -74,3 +74,7 @@ async function displayProducts() {
   }
 
 displayProducts();
+
+
+
+
