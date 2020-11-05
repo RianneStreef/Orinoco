@@ -20,13 +20,11 @@ console.log("productId is " + productId);
 
 async function getProduct() {
   const allProducts = await cameraService.collection
-  const currentProduct = allProducts.filter((foundProduct) => {
-    // return foundProduct._id === productId;
-    if (foundProduct.id === productId) {
-      console.log('Found you');
-      return true;
-    }
-  })[0];
+  const currentProduct = allProducts.find((foundProduct) => {
+    return foundProduct._id === productId;
+  });
+  console.log(currentProduct);
+  return currentProduct;
 }
 
 console.log(getProduct());
@@ -35,6 +33,7 @@ const cameraDisplay = document.getElementById('mainCameraDisplay');
 
 async function displayProduct() {
   let currentProduct = await getProduct();
+  console.log(currentProduct);
     const name = currentProduct.name;
     const price = currentProduct.price;
     const description = currentProduct.description;
@@ -109,3 +108,23 @@ async function displayProduct() {
       }	  
 
 displayProduct();
+
+function getStorage(){
+  const stored = localStorage.getItem('cameras'); // Get the items
+  console.log('stored '+ stored);
+
+    if (!stored) { // If you check !variable, you are basically checking if it's null
+      return []; // This return will break out of the function so the other return doesn't run
+    }
+      return stored; // The first return didn't run so this one will run 
+  }
+
+
+function newStorage(){
+  let inStorage = getStorage();
+
+}
+
+function addToCart(){
+
+}
