@@ -10,7 +10,6 @@ window.onscroll = function () {
 const queryString = window.location.search;
 const URLParams = new URLSearchParams(queryString);
 const productId = URLParams.get('id');
-console.log("productId is " + productId);
 
 /**
  * will find the selected product to display by its id
@@ -23,17 +22,18 @@ async function getProduct() {
   const currentProduct = allProducts.find((foundProduct) => {
     return foundProduct._id === productId;
   });
-  console.log(currentProduct);
   return currentProduct;
 }
 
-console.log(getProduct());
-
 const cameraDisplay = document.getElementById('mainCameraDisplay');
+
+/**
+ * creates the product display
+ * @param {Array} currentProduct
+ */
 
 async function displayProduct() {
   let currentProduct = await getProduct();
-  console.log(currentProduct);
     const name = currentProduct.name;
     const price = currentProduct.price;
     const description = currentProduct.description;
@@ -82,7 +82,7 @@ async function displayProduct() {
         button.classList.add('product-card-detail__button');
 
         nameContainer.innerText = name;
-        goBackLink.href = 'index.html';
+        goBackLink.href = '..//index.html';
         priceContainer.innerText = price;
         descriptionContainer.innerText = description;
         imgContainer.src = image;
@@ -109,22 +109,28 @@ async function displayProduct() {
 
 displayProduct();
 
-function getStorage(){
-  const stored = localStorage.getItem('cameras'); // Get the items
-  console.log('stored '+ stored);
+// localStorage.setItem('cameras', '5be1ed3f1c9d44000030b061,');
 
-    if (!stored) { // If you check !variable, you are basically checking if it's null
+function getStorage(){
+  let stored = localStorage.getItem('cameras'); // Get the items
+    if (stored == null) { // If you check !variable, you are basically checking if it's null
       return []; // This return will break out of the function so the other return doesn't run
     }
-      return stored; // The first return didn't run so this one will run 
-  }
+    else {
+      return JSON.parse(stored); // The first return didn't run so this one will run 
+    }
+}
+
+console.log(getStorage());
+console.log('type of ' + typeof getStorage());
 
 
 function newStorage(){
   let inStorage = getStorage();
-
+  let newStorage = inStorage.push(productId);
+  return inStorage;
 }
 
 function addToCart(){
-
+  localStorage.setItem('cameras', JSON.stringify(newStorage()));
 }
