@@ -1,7 +1,7 @@
 describe("Get CameraService", function() {
   it ("should retrieve CameraService", function() {
-    expect(allProducts).toBeDefined();
-    expect(allProducts.length).toBe(5);
+    expect(allAvailableProducts).toBeDefined();
+    expect(allAvailableProducts.length).toBe(5);
   });
 });
 

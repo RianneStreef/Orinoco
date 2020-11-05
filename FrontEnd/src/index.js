@@ -7,23 +7,27 @@ window.onscroll = function () {
   changeHeaderClass()
 }
 
-let allProducts = [];
+/**
+ * This is going to collect the available products from the database
+ * @return {Array} allAvailableProducts - all products to display in the shop
+ */
+
 async function getProducts() {
-  allProducts = await (cameraService.collection);
-  console.log(allProducts);
+  let allProducts = await (cameraService.collection);
   return allProducts;
 }
 
-let allAvailableProducts = getProducts();
-
-console.log(allProducts);
-console.log(allAvailableProducts);
-
-
-
 const cameraDisplay = document.getElementById("mainCameraDisplay");
 
-async function displayProducts(allAvailableProducts) {
+/**
+ * This is going to display all the found products 
+ * @param {Array} allAvailableProducts - 
+ */
+
+async function displayProducts() {
+  let allAvailableProducts = await getProducts()
+  console.log(allAvailableProducts);
+
   for (let camera of allAvailableProducts) {
     
     const name = camera.name;
@@ -69,10 +73,4 @@ async function displayProducts(allAvailableProducts) {
     }	  
   }
 
-// async function getProducts() {
-//   displayProducts(await cameraService.collection);
-// }
- 
-getProducts();
-displayProducts(allProducts);
-
+displayProducts();

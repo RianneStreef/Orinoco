@@ -47,6 +47,7 @@ h1 {
   background-color: white;
   position: fixed;
   width: 100%;
+  transition: opacity 500ms ease-in-out;
 }
 .header i {
   font-size: 30px;
@@ -56,6 +57,7 @@ h1 {
 
 .header-background {
   opacity: 80%;
+  transition: opacity 500ms ease-in-out;
 }
 
 .hero {
