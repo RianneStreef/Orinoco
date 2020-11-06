@@ -9,6 +9,10 @@ window.onscroll = function () {
 
 async function productsInCart() {
   const productsInCart = JSON.parse(localStorage.getItem('cameras'));
+  if (productsInCart == null) {
+    //do nothing
+  }
+  else {
   const allProducts = await cameraService.collection;
   const productsToDisplay = allProducts.filter((currentProduct) => {
     for (let i = 0; i < productsInCart.length; i++) {
@@ -19,12 +23,16 @@ async function productsInCart() {
   });
   return productsToDisplay;
 }
-
+}
 
 const cameraDisplay = document.getElementById("selectedItems");
 
 async function displayProductsInCart() {
   const productsToDisplay = await productsInCart();
+  if (productsToDisplay == null){
+    //do nothing
+  }
+  else {
   for (let camera of productsToDisplay) {
     const name = camera.name;
     const price = camera.price;
@@ -71,6 +79,7 @@ async function displayProductsInCart() {
       cameraDisplay.appendChild(cardContainer);
   }
 }
+}
 
 displayProductsInCart();
 
@@ -83,4 +92,48 @@ const emptyCartButton = document.getElementById("empty-cart-button");
 emptyCartButton.onclick = () => {
   deleteAllItems();
 }
+
+const totalPrice = document.getElementById('totalPrice');
+
+async function getCamerasToAdd() {
+  let camerasToAdd = await productsInCart();
+  console.log(camerasToAdd);
+  return camerasToAdd;
+}
+
+
+let camerasToAdd = getCamerasToAdd()
+  .then(() => {let pricesToAdd = camerasToAdd.map(function (camera) {
+    console.log(pricesToAdd);
+    return camera.price
+  });
+})
+
+console.log(camerasToAdd);
+
+
+
+// let camerasToAdd = getCamerasToAdd();
+// console.log(camerasToAdd);
+
+
+
+// console.log(pricesToAdd());
+
+// getCamerasToAdd();
+
+
+
+
+//   console.log(pricesToAdd);
+//   let allPricesAdded = pricesToAdd.reduce(function(a, b){
+//     return a + b;
+//   }, 0);
+//   console.log(allPricesAdded);
+//   return allPricesAdded;
+// }
+
+
+// totalPrice.innerText = allPricesAdded;
+
 

@@ -133,4 +133,5 @@ function newStorage(){
 
 function addToCart(){
   localStorage.setItem('cameras', JSON.stringify(newStorage()));
+  location.href='../cart/index.html';
 }
