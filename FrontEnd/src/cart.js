@@ -65,6 +65,7 @@ async function displayProductsInCart() {
         button.className = "button";
         button.onclick = function(){
           removeItem(id);
+          console.log(id);
           // window.location.reload();    
         };
 
@@ -96,24 +97,23 @@ async function displayProductsInCart() {
 
 displayProductsInCart();
 
-// onclick, use productsInCart function to get all products, compare to the 
-//current id and is it is not the same, add it to the new products to display
-// list, and display that list
 
-function removeItem(){
-  let productsToDisplay = newProductsToDisplay();
+
+function removeItem(id){
+  let productsToDisplay = newProductsToDisplay(id);
   console.log('products to display after removal ' + productsToDisplay);
 
   localStorage.setItem('cameras', JSON.stringify(productsToDisplay));
-  window.location.reload();    
+  // window.location.reload();    
 }
 
-function newProductsToDisplay() {
-let newProductsToDisplay = itemsInCart.filter((currentProduct) => {
+function newProductsToDisplay(id) {
+  console.log(itemsInCart);
+let newProductsToDisplay = itemsInCart.filter(() => {
   for (let i = 0; i < itemsInCart.length; i++) {
-    if (itemsInCart[i] !== currentProduct) {
-      console.log(itemsInCart[i]);
-      console.log("current._Id " + currentProduct);
+    if (itemsInCart[i] !== id) {
+      console.log('items in cart ' + itemsInCart[i]);
+      console.log("current id" + id);
       return true; 
       }
     }
