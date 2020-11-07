@@ -13,17 +13,18 @@ window.onscroll = function () {
  * @returns {Array} productsToDisplay
  */
 
+const itemsInCart = JSON.parse(localStorage.getItem('cameras'));
+
 async function productsInCart() {
-  const productsInCart = JSON.parse(localStorage.getItem('cameras'));
-  if (productsInCart == null) {
+  if (itemsInCart == null) {
     //do nothing
     return
   }
   else {
   const allProducts = await cameraService.collection;
   const productsToDisplay = allProducts.filter((currentProduct) => {
-    for (let i = 0; i < productsInCart.length; i++) {
-      if (productsInCart[i] === currentProduct._id) {
+    for (let i = 0; i < itemsInCart.length; i++) {
+      if (itemsInCart[i] === currentProduct._id) {
         return true; 
       }
     }
@@ -37,7 +38,7 @@ const cameraDisplay = document.getElementById("selectedItems");
 
 /**
  * display products in cart
- * @param {Array} productsInCart
+ * @param {Array} itemsInCart
  */
 async function displayProductsInCart() {
   let productsToDisplay = await productsInCart();
@@ -100,21 +101,31 @@ displayProductsInCart();
 // list, and display that list
 
 function removeItem(){
-  productsToDisplay = newProductsToDisplay();
+  let productsToDisplay = newProductsToDisplay();
+  console.log('products to display after removal ' + productsToDisplay);
+
   localStorage.setItem('cameras', JSON.stringify(productsToDisplay));
-  console.log(displayProductsInCart)
-  displayProductsInCart();
+  window.location.reload();    
 }
 
 function newProductsToDisplay() {
-const newProductsToDisplay = productsInCart.filter((currentProduct) => {
-  for (let i = 0; i < productsInCart.length; i++) {
-    if (productsInCart[i] !== currentProduct._id) {
-      console.log(newProductsToDisplay);
+let newProductsToDisplay = itemsInCart.filter((currentProduct) => {
+  for (let i = 0; i < itemsInCart.length; i++) {
+    if (itemsInCart[i] !== currentProduct) {
+      console.log(itemsInCart[i]);
+      console.log("current._Id " + currentProduct);
       return true; 
-  }
-  }
+      }
+    }
+
 });
+console.log(itemsInCart);
+if (newProductsToDisplay == null) {
+  return [];
+}
+else {
+  return newProductsToDisplay;
+}
 }
 
 function deleteAllItems() {
@@ -126,7 +137,6 @@ const emptyCartButton = document.getElementById("empty-cart-button");
 emptyCartButton.onclick = () => {
   deleteAllItems();
 }
-
 
 
 const totalPrice = document.getElementById('totalPrice');

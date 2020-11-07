@@ -26,7 +26,6 @@ const cameraDisplay = document.getElementById("mainCameraDisplay");
 
 async function displayProducts() {
   let allAvailableProducts = await getProducts()
-  console.log(allAvailableProducts);
 
   for (let camera of allAvailableProducts) {
     
