@@ -109,27 +109,38 @@ async function displayProduct() {
 
 displayProduct();
 
-// localStorage.setItem('cameras', '5be1ed3f1c9d44000030b061,');
+/**
+ * get current localStorage
+ * @returns array of products, or an empty array nothing is stored yet
+ */
 
 function getStorage(){
-  let stored = localStorage.getItem('cameras'); // Get the items
-    if (stored == null) { // If you check !variable, you are basically checking if it's null
-      return []; // This return will break out of the function so the other return doesn't run
+  let stored = localStorage.getItem('cameras'); 
+    if (stored == null) { 
+      return []; 
     }
     else {
-      return JSON.parse(stored); // The first return didn't run so this one will run 
+      return JSON.parse(stored); 
     }
 }
 
-console.log(getStorage());
-console.log('type of ' + typeof getStorage());
+/**
+ * add current product to the array that is to be stored
+ * @param {Array} getStorage() 
+ * @returns {Array}
+ */
 
 
 function newStorage(){
   let inStorage = getStorage();
-  let newStorage = inStorage.push(productId);
+  inStorage.push(productId);
   return inStorage;
 }
+
+/**
+ * push new array to localStorage, and go to cart page
+ * 
+ */
 
 function addToCart(){
   localStorage.setItem('cameras', JSON.stringify(newStorage()));

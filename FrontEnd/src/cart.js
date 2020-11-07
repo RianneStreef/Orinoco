@@ -160,15 +160,14 @@ let newProductsToDisplay = removeItem();
 
 function removeItem(id){
   const productsInCart = JSON.parse(localStorage.getItem('cameras'));
-  let thisProduct = id;
+  const thisProduct = id;
   const newProductsToDisplay = productsInCart.filter((thisProduct) => {
     for (let i = 0; i < productsInCart.length; i++) {
-      if (productsInCart[i] !== thisProduct) {
+      if (productsInCart[i] !== id) {
         return true;
       }
     }
   });
-  console.log(newProductsToDisplay);
   displayNewProductsInCart();
   return newProductsToDisplay;
 }
