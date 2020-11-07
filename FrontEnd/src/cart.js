@@ -117,15 +117,14 @@ let newProductsToDisplay = itemsInCart.filter(() => {
       return true; 
       }
     }
-
 });
 console.log(itemsInCart);
 if (newProductsToDisplay == null) {
   return [];
-}
+  }
 else {
   return newProductsToDisplay;
-}
+  }
 }
 
 function deleteAllItems() {
@@ -138,35 +137,34 @@ emptyCartButton.onclick = () => {
   deleteAllItems();
 }
 
+async function getCamerasToAdd() {
+let camerasToAdd = await productsInCart();
+
+let pricesToAdd = camerasToAdd.map(function (camera) {
+  return camera.price;
+  });
+  return pricesToAdd;
+}
+
+getCamerasToAdd();
+
+async function allPricesAdded() {
+let pricesToAdd = await getCamerasToAdd();
+let allPricesAdded = pricesToAdd.reduce(function(a, b){
+  return a + b;
+  }, 0);
+  
+return allPricesAdded;
+}
 
 const totalPrice = document.getElementById('totalPrice');
 
-async function getCamerasToAdd() {
-  let camerasToAdd = await productsInCart();
-  console.log(camerasToAdd);
-  return camerasToAdd;
+async function total() {
+ let price = await allPricesAdded();
+ console.log(price);
+totalPrice.innerText = price;
 }
 
-
-// let camerasToAdd = getCamerasToAdd()
-//   .then((camerasToAdd) => {let pricesToAdd = camerasToAdd.map(function (camera) {
-//     console.log(pricesToAdd);
-//     return price = camera.price
-//   });
-// })
-
-// console.log(camerasToAdd);
-
-// function allPricesAdded() {
-// let allPricesAdded = pricesToAdd.reduce(function(a, b){
-//   return a + b;
-//   }, 0);
-  
-// console.log(allPricesAdded());
-// return allPricesAdded;
-// }
-
-
-// totalPrice.innerText = allPricesAdded();
+total();
 
 
