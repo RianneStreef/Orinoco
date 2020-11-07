@@ -7,10 +7,17 @@ window.onscroll = function () {
   changeHeaderClass()
 }
 
+/**
+ * get productIds from local storage, if empty, do nothing, otherwise filter
+ * the products against the total list, to see which ones to display
+ * @returns {Array} productsToDisplay
+ */
+
 async function productsInCart() {
   const productsInCart = JSON.parse(localStorage.getItem('cameras'));
   if (productsInCart == null) {
     //do nothing
+    return
   }
   else {
   const allProducts = await cameraService.collection;
@@ -27,6 +34,11 @@ async function productsInCart() {
 
 const cameraDisplay = document.getElementById("selectedItems");
 
+
+/**
+ * display products in cart
+ * @param {Array} productsInCart
+ */
 async function displayProductsInCart() {
   let productsToDisplay = await productsInCart();
   if (productsToDisplay == null){
@@ -51,7 +63,6 @@ async function displayProductsInCart() {
       const button = document.createElement('button')
         button.className = "button";
         button.onclick = function(){
-          console.log('current id ' + id);
           removeItem(id);
           // window.location.reload();    
         };
@@ -88,91 +99,23 @@ displayProductsInCart();
 //current id and is it is not the same, add it to the new products to display
 // list, and display that list
 
-// function removeItem(){
-//   productsToDisplay = newProductsToDisplay;
-//   displayProductsInCart();
-// };
+function removeItem(){
+  productsToDisplay = newProductsToDisplay();
+  localStorage.setItem('cameras', JSON.stringify(productsToDisplay));
+  console.log(displayProductsInCart)
+  displayProductsInCart();
+}
 
-
-// function newProductsToDisplay() {
-// let productsInCart = productsInCart();
-// const newProductsToDisplay = productsInCart.filter((currentProduct) => {
-//   for (let i = 0; i < productsInCart.length; i++) {
-//     if (productsInCart[i] !== currentProduct._id) {
-//       console.log(newProductsToDisplay);
-//       return true; 
-//   }
-//   }
-// });
-// }
-
-// or, just get this one out of the localStorage, and re-call the displayProductsInCart function
-
-
-
-async function displayNewProductsInCart() {
-let newProductsToDisplay = removeItem();
-  for (let camera of newProductsToDisplay) {
-    const name = camera.name;
-    const price = camera.price;
-    const image = camera.imageUrl;
-    const id = camera._id;
-  
-      const cardContainer = document.createElement('div');
-        cardContainer.className = "card";
-        cardContainer.classList.add('cart-card');
-
-      const textContainer = document.createElement('div');
-      const nameContainer = document.createElement('div');
-      const priceContainer = document.createElement('div');
-      const imgContainer = document.createElement('img');   
-      const buttonContainer = document.createElement('div')
-      const button = document.createElement('button')
-        button.className = "button";
-        button.onclick = function(){
-          removeItem(id);
-          // window.location.reload();    
-        };
-
-      textContainer.classList.add('cart-card__text');
-      nameContainer.classList.add('cart-card__name');
-      priceContainer.classList.add('cart-card__price');
-      imgContainer.classList.add('cart-card__img');
-      buttonContainer.classList.add('cart-container');
-      button.classList.add('cart-card__button');
-  
-      nameContainer.innerText = name;
-      priceContainer.innerText = price;
-      imgContainer.src = image;
-      button.innerText = 'Remove';
-
-
-      cardContainer.appendChild(imgContainer);
-      cardContainer.appendChild(nameContainer);
-      cardContainer.appendChild(priceContainer);
-      cardContainer.appendChild(buttonContainer);
-
-      buttonContainer.appendChild(button);
-  
-      cameraDisplay.appendChild(cardContainer);
+function newProductsToDisplay() {
+const newProductsToDisplay = productsInCart.filter((currentProduct) => {
+  for (let i = 0; i < productsInCart.length; i++) {
+    if (productsInCart[i] !== currentProduct._id) {
+      console.log(newProductsToDisplay);
+      return true; 
   }
+  }
+});
 }
-
-function removeItem(id){
-  const productsInCart = JSON.parse(localStorage.getItem('cameras'));
-  const thisProduct = id;
-  const newProductsToDisplay = productsInCart.filter((thisProduct) => {
-    for (let i = 0; i < productsInCart.length; i++) {
-      if (productsInCart[i] !== id) {
-        return true;
-      }
-    }
-  });
-  displayNewProductsInCart();
-  return newProductsToDisplay;
-}
-
-//opdelen in meerdere functies
 
 function deleteAllItems() {
   localStorage.clear();
