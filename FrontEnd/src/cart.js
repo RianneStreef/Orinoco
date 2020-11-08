@@ -24,6 +24,7 @@ async function productsInCart() {
   const allProducts = await cameraService.collection;
   const productsToDisplay = allProducts.filter((currentProduct) => {
     for (let i = 0; i < itemsInCart.length; i++) {
+      console.log('items in cart ' + itemsInCart[i]);
       if (itemsInCart[i] === currentProduct._id) {
         return true; 
       }
@@ -32,6 +33,7 @@ async function productsInCart() {
   return productsToDisplay;
 }
 }
+//what if I loop first and filter then.. 
 
 const cameraDisplay = document.getElementById("selectedItems");
 
@@ -98,34 +100,52 @@ async function displayProductsInCart() {
 displayProductsInCart();
 
 
+/**
+ * Get localStorage to check against selected Id 
+ * @param {*} id 
+ * @returns {Array} New list of items to display
+ */
 
 function removeItem(id){
   let productsToDisplay = newProductsToDisplay(id);
   console.log('products to display after removal ' + productsToDisplay);
-
   localStorage.setItem('cameras', JSON.stringify(productsToDisplay));
   // window.location.reload();    
 }
 
+/**
+ *  remove one selected item from cart by looping trough items in cart, and comparing
+ * those to the selected Id
+ * @param {*} id 
+ * @returns {Array} List of items to put in localStorage
+ */
+
+// why is itemsInCart[i] always the same?!
 function newProductsToDisplay(id) {
-  console.log(itemsInCart);
 let newProductsToDisplay = itemsInCart.filter(() => {
   for (let i = 0; i < itemsInCart.length; i++) {
+    console.log('items in cart ' + itemsInCart[i]);
+    console.log("current id " + id);
+
     if (itemsInCart[i] !== id) {
-      console.log('items in cart ' + itemsInCart[i]);
-      console.log("current id" + id);
       return true; 
       }
     }
+  return newProductsToDisplay;
 });
-console.log(itemsInCart);
+
 if (newProductsToDisplay == null) {
+  console.log("cart empty")
   return [];
   }
 else {
   return newProductsToDisplay;
   }
 }
+
+/**
+ * Delete all items from localStorage
+ */
 
 function deleteAllItems() {
   localStorage.clear();
@@ -137,32 +157,63 @@ emptyCartButton.onclick = () => {
   deleteAllItems();
 }
 
+/**
+ * Gets items in cart, and puts the prices of those items in an Array to be 
+ * added to a total price
+ * @param {Array} camerasToAdd
+ * @returns {Array} pricesToAdd
+ */
+
 async function getCamerasToAdd() {
 let camerasToAdd = await productsInCart();
-
+if (camerasToAdd == null) {
+  // do nothing
+}
+else {
 let pricesToAdd = camerasToAdd.map(function (camera) {
   return camera.price;
   });
   return pricesToAdd;
+  }
 }
 
 getCamerasToAdd();
 
+/**
+ * Add up all the prices of items in cart to a total price
+ * @param {Array} pricesToAdd
+ * @returns {Number} total price
+ */
+
 async function allPricesAdded() {
 let pricesToAdd = await getCamerasToAdd();
+if (pricesToAdd == null) {
+  // do nothing
+}
+else {
 let allPricesAdded = pricesToAdd.reduce(function(a, b){
   return a + b;
   }, 0);
   
 return allPricesAdded;
+  }
 }
-
 const totalPrice = document.getElementById('totalPrice');
 
+
+/**
+ * Displays the total price on site
+ * @param {Number} price
+ */
 async function total() {
  let price = await allPricesAdded();
- console.log(price);
+ if (price == null) {
+
+//do nothing
+ }
+ else {
 totalPrice.innerText = price;
+}
 }
 
 total();

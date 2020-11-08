@@ -224,6 +224,10 @@ h1 {
   content: "$";
 }
 
+.total-price:before {
+  content: "$";
+}
+
 .form {
   margin: 0.8em;
   display: flex;
