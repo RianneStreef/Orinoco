@@ -39,8 +39,10 @@ const cameraDisplay = document.getElementById("selectedItems");
 async function displayProductsInCart() {
   itemsInCart = JSON.parse(localStorage.getItem('cameras'));
   let productsToDisplay = await productsInCart();
-  if (productsToDisplay == null){
-    return null;
+
+  if (productsToDisplay.length === 0){
+  console.log('no items in cart');
+  totalPrice.innerText = "0";
   }
     cameraDisplay.innerText = '';
   for (let camera of productsToDisplay) {
@@ -118,12 +120,10 @@ async function displayProductsInCart() {
         async function total() {
          let price = await allPricesAdded();
          if (price == null) {
-         return null;
+          totalPrice.innerText = "0";
           
          }
-         else {
         totalPrice.innerText = price;
-        }
         }
         total();     
   }
