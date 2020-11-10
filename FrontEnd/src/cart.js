@@ -24,8 +24,10 @@ async function productsInCart() {
   const allProducts = await cameraService.collection;
   const productsToDisplay = allProducts.filter((currentProduct) => {
     for (let i = 0; i < itemsInCart.length; i++) {
-      console.log('items in cart ' + itemsInCart[i]);
       if (itemsInCart[i] === currentProduct._id) {
+        // console.log('items in cart ' + itemsInCart[i]);
+        // console.log("current id " + currentProduct._id); 
+        // why do I not get all the 5 product ids?    
         return true; 
       }
     }
@@ -120,18 +122,16 @@ function removeItem(id){
  * @returns {Array} List of items to put in localStorage
  */
 
-// why is itemsInCart[i] always the same?!
 function newProductsToDisplay(id) {
 let newProductsToDisplay = itemsInCart.filter(() => {
   for (let i = 0; i < itemsInCart.length; i++) {
     console.log('items in cart ' + itemsInCart[i]);
-    console.log("current id " + id);
+    console.log("current id " + id);    
 
     if (itemsInCart[i] !== id) {
       return true; 
       }
     }
-  return newProductsToDisplay;
 });
 
 if (newProductsToDisplay == null) {
@@ -139,6 +139,7 @@ if (newProductsToDisplay == null) {
   return [];
   }
 else {
+  // window.location.reload();    
   return newProductsToDisplay;
   }
 }
@@ -219,3 +220,53 @@ totalPrice.innerText = price;
 total();
 
 
+/**
+ * create contact object
+ * @param {string} contactForm
+ * @returns {Object}
+ */
+
+const submitOrder = document.getElementById('submit-button');
+
+submitOrder.onclick = createContact();
+
+function createContact(){
+  let elements = document.getElementById("contactForm").elements;
+  let contact ={};
+  for(let i = 0 ; i < elements.length ; i++){
+      let item = elements.item(i);
+      contact[item.name] = item.value;
+  }
+  return contact;
+}
+
+let contact = createContact(); 
+
+/**
+ * send contact object and array of product ids to the server
+ * @param {Object} contact
+ * @param {Array} itemsInCart
+ */
+
+
+
+
+const formData = new FormData();
+
+// formData.append('product Array', itemsInCart);
+// formData.append('contact Object', contact);
+
+
+// this works with GET, not POST
+fetch("http://localhost:3000/api/cameras", {
+  method: 'POST',
+//   body: JSON.stringify(contact),
+//   body: JSON.stringify(itemsInCart),
+})
+.then(response => response.json())
+.then(data => {
+  console.log("success:", data);
+})
+.catch((error) => {
+  console.error("error:", error);
+});
