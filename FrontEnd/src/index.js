@@ -1,11 +1,11 @@
-import changeHeaderClass from './header.js';
-import cameraService from './cameraService.js';
+import changeHeaderClass from "./header.js";
+import cameraService from "./cameraService.js";
 
 let header = document.getElementById("header");
 
 window.onscroll = function () {
-  changeHeaderClass()
-}
+  changeHeaderClass();
+};
 
 /**
  * This is going to collect the available products from the database
@@ -13,67 +13,65 @@ window.onscroll = function () {
  */
 
 async function getProducts() {
-  let allProducts = await (cameraService.collection);
+  let allProducts = await cameraService.collection;
   return allProducts;
 }
 
 const cameraDisplay = document.getElementById("mainCameraDisplay");
 
 /**
- * This is going to display all the found products 
- * @param {Array} allAvailableProducts - 
+ * This is going to display all the found products
+ * @param {Array} allAvailableProducts -
  */
 
 async function displayProducts() {
-  let allAvailableProducts = await getProducts()
+  let allAvailableProducts = await getProducts();
 
   for (let camera of allAvailableProducts) {
-    
     const name = camera.name;
     const price = camera.price;
     const image = camera.imageUrl;
     const id = camera._id;
-  
-      const cardContainer = document.createElement('div');
-        cardContainer.className = "card";
-        cardContainer.classList.add('product-card');
 
-      const textContainer = document.createElement('div');
-      const nameContainer = document.createElement('div');
-      const priceContainer = document.createElement('div');
-      const imgContainer = document.createElement('img');
-      const buttonContainer = document.createElement('div')
-      const button = document.createElement('button')
-        button.className = "button";
-        button.setAttribute("onclick",`location.href='product/index.html?id=${id}'`);
+    const cardContainer = document.createElement("div");
+    cardContainer.className = "card";
+    cardContainer.classList.add("product-card");
 
-      textContainer.classList.add('product-card__text');
-      nameContainer.classList.add('product-card__name');
-      priceContainer.classList.add('product-card__price');
-      imgContainer.classList.add('product-card__img');
-      buttonContainer.classList.add('button-container');
-      button.classList.add('product-card__button');
-  
-      nameContainer.innerText = name;
-      priceContainer.innerText = price;
-      imgContainer.src = image;
-      button.innerText = 'Details';
+    const textContainer = document.createElement("div");
+    const nameContainer = document.createElement("div");
+    const priceContainer = document.createElement("div");
+    const imgContainer = document.createElement("img");
+    const buttonContainer = document.createElement("div");
+    const button = document.createElement("button");
+    button.className = "button";
+    button.setAttribute(
+      "onclick",
+      `location.href='product/index.html?id=${id}'`
+    );
 
-      textContainer.appendChild(nameContainer);
-      textContainer.appendChild(priceContainer);
+    textContainer.classList.add("product-card__text");
+    nameContainer.classList.add("product-card__name");
+    priceContainer.classList.add("product-card__price");
+    imgContainer.classList.add("product-card__img");
+    buttonContainer.classList.add("button-container");
+    button.classList.add("product-card__button");
 
-      cardContainer.appendChild(textContainer);
-      cardContainer.appendChild(imgContainer);
-      cardContainer.appendChild(buttonContainer);
+    nameContainer.innerText = name;
+    priceContainer.innerText = price.toLocaleString();
+    imgContainer.src = image;
+    button.innerText = "Details";
 
-      buttonContainer.appendChild(button);
-  
-      cameraDisplay.appendChild(cardContainer);
-    }	  
+    textContainer.appendChild(nameContainer);
+    textContainer.appendChild(priceContainer);
+
+    cardContainer.appendChild(textContainer);
+    cardContainer.appendChild(imgContainer);
+    cardContainer.appendChild(buttonContainer);
+
+    buttonContainer.appendChild(button);
+
+    cameraDisplay.appendChild(cardContainer);
   }
+}
 
 displayProducts();
-
-
-
-

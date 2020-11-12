@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch ./sass/main.scss:./css/style.css"
-    },
+    "sass": "sass --watch ./sass/main.scss:./css/style.css",
+    "test": "./node_modules/.bin/jest",
+    "watch": "./node_modules/.bin/jest --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RianneStreef/Orinoco.git"
@@ -15,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/RianneStreef/Orinoco/issues"
   },
-  "homepage": "https://github.com/RianneStreef/Orinoco#readme"
+  "homepage": "https://github.com/RianneStreef/Orinoco#readme",
+  "dependencies": {
+    "jest": "^26.6.3"
+  }
 }
