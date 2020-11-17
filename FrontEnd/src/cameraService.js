@@ -1,10 +1,14 @@
+/**
+ * @returns {object} - an instance of the available items
+ */
+
 class CameraService {
   constructor(URL) {
     this._collection = fetch(URL)
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      });
   }
 
   get collection() {

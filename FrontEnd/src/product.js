@@ -125,7 +125,7 @@ function getStorage() {
 
 /**
  * add current product to the array that is to be stored
- * @param {Array} getStorage()
+ * @param {Array} getStorage
  * @returns {Array}
  */
 
@@ -137,7 +137,7 @@ function newStorage() {
 
 /**
  * push new array to localStorage, and go to cart page
- *
+ *@param {Array} inStorage
  */
 
 function addToCart() {

@@ -180,6 +180,12 @@ submitOrderButton.addEventListener("click", (event) => {
   postData(contact, itemsInCart);
 });
 
+/**
+ * will create a contact object
+ * @param {form} contactForm
+ * @returns {object} contact
+ */
+
 function createContact() {
   let elements = document.getElementById("contactForm").elements;
   const contact = {};
