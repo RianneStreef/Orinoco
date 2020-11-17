@@ -14,7 +14,6 @@ window.onscroll = function () {
  */
 
 let itemsInCart = JSON.parse(localStorage.getItem("cameras"));
-console.log(typeof itemsInCart);
 
 async function productsInCart() {
   if (itemsInCart == null) {
@@ -38,15 +37,13 @@ const cameraDisplay = document.getElementById("selectedItems");
  * @param {Array} itemsInCart
  */
 async function displayProductsInCart() {
-  itemsInCart = localStorage.getItem("cameras");
-  console.log(typeof itemsInCart);
+  itemsInCart = JSON.parse(localStorage.getItem("cameras"));
   let productsToDisplay = await productsInCart();
 
-  if (itemsInCart === null) {
+  if (productsToDisplay.length === 0) {
+    console.log("no items in cart");
     totalPrice.innerText = "0";
-    return null;
   }
-
   cameraDisplay.innerText = "";
   for (let camera of productsToDisplay) {
     const name = camera.name;
@@ -74,7 +71,7 @@ async function displayProductsInCart() {
     button.classList.add("cart-card__button");
 
     nameContainer.innerText = name;
-    priceContainer.innerText = price.toLocaleString();
+    priceContainer.innerText = price;
     imgContainer.src = image;
     button.innerText = "Remove";
 
@@ -121,7 +118,7 @@ async function displayProductsInCart() {
       if (price == null) {
         totalPrice.innerText = "0";
       }
-      totalPrice.innerText = price.toLocaleString();
+      totalPrice.innerText = price;
     }
     total();
   }
@@ -149,7 +146,7 @@ function removeItem(id, itemsArr) {
 
 function deleteAllItems() {
   localStorage.clear();
-  displayProductsInCart();
+  window.location.reload();
 }
 
 const emptyCartButton = document.getElementById("empty-cart-button");
@@ -165,36 +162,24 @@ emptyCartButton.onclick = () => {
 
 const submitOrderButton = document.getElementById("submit-button");
 
+// 1: Delete function
+// 2: Then add arrow after (), parentheses or parameters
+// 3: Optional:
+
 submitOrderButton.addEventListener("click", (event) => {
   event.preventDefault();
   let contact = createContact();
+
   console.log(contact);
-  postData(contact, itemsInCart);
+  postData(contact, ["5be1ed3f1c9d44000030b061"]);
 });
-
-function createContact() {
-  let elements = document.getElementById("contactForm").elements;
-  let contact = {};
-  for (let i = 0; i < elements.length; i++) {
-    const currentElement = elements[i];
-    if (currentElement.nodeName === "INPUT") {
-      contact[currentElement.name] = currentElement.value;
-    }
-  }
-  return contact;
-}
-
-/**
- * send contact object and array of product ids to the server
- * @param {Object} contact
- * @param {Array} itemsInCart
- */
 
 function postData(contact, products) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
+    // contact: contact,
     contact,
     products,
   });
@@ -212,3 +197,23 @@ function postData(contact, products) {
     .catch((error) => console.log("error", error));
   //
 }
+
+function createContact() {
+  let elements = document.getElementById("contactForm").elements;
+  const contact = {};
+  for (let i = 0; i < elements.length; i++) {
+    const currentElement = elements[i];
+    if (currentElement.nodeName === "INPUT") {
+      contact[currentElement.name] = currentElement.value;
+    }
+  }
+  return contact;
+}
+
+let contact = createContact();
+
+/**
+ * send contact object and array of product ids to the server
+ * @param {Object} contact
+ * @param {Array} itemsInCart
+ */
