@@ -115,11 +115,10 @@ displayProduct();
  */
 
 function getStorage() {
-  let stored = localStorage.getItem("cameras");
+  let stored = JSON.parse(localStorage.getItem("cameras"));
   if (!stored) {
     return [];
   } else {
-    console.log(stored);
     return stored;
   }
 }
@@ -132,7 +131,6 @@ function getStorage() {
 
 function newStorage() {
   let inStorage = getStorage();
-  console.log(typeof inStorage);
   inStorage.push(productId);
   return inStorage;
 }
@@ -142,9 +140,7 @@ function newStorage() {
  *
  */
 
-let inStorage = newStorage();
-
 function addToCart() {
-  localStorage.setItem("cameras", inStorage);
+  localStorage.setItem("cameras", JSON.stringify(newStorage()));
   location.href = "../cart/index.html";
 }

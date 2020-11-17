@@ -14,10 +14,10 @@ window.onscroll = function () {
  */
 
 let itemsInCart = JSON.parse(localStorage.getItem("cameras"));
-console.log(typeof itemsInCart);
+console.log(itemsInCart);
 
 async function productsInCart() {
-  if (itemsInCart == null) {
+  if (!itemsInCart) {
     return null;
   }
   const allProducts = await cameraService.collection;
@@ -38,15 +38,17 @@ const cameraDisplay = document.getElementById("selectedItems");
  * @param {Array} itemsInCart
  */
 async function displayProductsInCart() {
-  itemsInCart = localStorage.getItem("cameras");
+  itemsInCart = JSON.parse(localStorage.getItem("cameras"));
+  console.log(itemsInCart);
   console.log(typeof itemsInCart);
+
   let productsToDisplay = await productsInCart();
 
-  if (itemsInCart === null) {
+  if (!productsToDisplay) {
+    console.log("no items in cart");
     totalPrice.innerText = "0";
     return null;
   }
-
   cameraDisplay.innerText = "";
   for (let camera of productsToDisplay) {
     const name = camera.name;
@@ -89,7 +91,7 @@ async function displayProductsInCart() {
 
     async function getCamerasToAdd() {
       let camerasToAdd = await productsInCart();
-      if (camerasToAdd == null) {
+      if (!camerasToAdd) {
         return null;
       }
 
@@ -101,7 +103,7 @@ async function displayProductsInCart() {
 
     async function allPricesAdded() {
       let pricesToAdd = await getCamerasToAdd();
-      if (pricesToAdd == null) {
+      if (!pricesToAdd) {
         return null;
       }
       let allPricesAdded = pricesToAdd.reduce(function (a, b) {
@@ -118,10 +120,11 @@ async function displayProductsInCart() {
      */
     async function total() {
       let price = await allPricesAdded();
-      if (price == null) {
+      if (!price) {
         totalPrice.innerText = "0";
       }
       totalPrice.innerText = price.toLocaleString();
+      localStorage.setItem("price", price);
     }
     total();
   }
@@ -149,7 +152,7 @@ function removeItem(id, itemsArr) {
 
 function deleteAllItems() {
   localStorage.clear();
-  displayProductsInCart();
+  window.location.reload();
 }
 
 const emptyCartButton = document.getElementById("empty-cart-button");
@@ -165,18 +168,24 @@ emptyCartButton.onclick = () => {
 
 const submitOrderButton = document.getElementById("submit-button");
 
+// 1: Delete function
+// 2: Then add arrow after (), parentheses or parameters
+// 3: Optional:
+
 submitOrderButton.addEventListener("click", (event) => {
   event.preventDefault();
   let contact = createContact();
+
   console.log(contact);
   postData(contact, itemsInCart);
 });
 
 function createContact() {
   let elements = document.getElementById("contactForm").elements;
-  let contact = {};
+  const contact = {};
   for (let i = 0; i < elements.length; i++) {
     const currentElement = elements[i];
+    console.log(elements[i]);
     if (currentElement.nodeName === "INPUT") {
       contact[currentElement.name] = currentElement.value;
     }
@@ -206,9 +215,11 @@ function postData(contact, products) {
     redirect: "follow",
   };
 
-  fetch("http://192.168.1.14:3000/api/cameras/order/", requestOptions)
+  fetch("http://localhost:3000/api/cameras/order/", requestOptions)
     .then((response) => response.json())
-    .then((result) => console.log(result))
+    .then((result) => localStorage.setItem("orderId", result.orderId))
     .catch((error) => console.log("error", error));
-  //
+  // why does this trow an error, but if I change it above, it does work..
+  // console.log(result.orderId);
+  window.location = "../confirmation/index.html";
 }
