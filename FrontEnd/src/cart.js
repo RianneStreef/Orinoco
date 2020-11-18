@@ -44,7 +44,7 @@ async function displayProductsInCart() {
 
   let productsToDisplay = await productsInCart();
 
-  if (!productsToDisplay) {
+  if (productsToDisplay.length == 0) {
     console.log("no items in cart");
     totalPrice.innerText = "0";
     return null;
@@ -138,10 +138,14 @@ displayProductsInCart();
  * @returns {Array} New list of items to put in localStorage
  */
 
+/**
+ * Filter out the id that has to be removed
+ *
+ * @param {string} id
+ * @param {Array} itemsArr
+ */
 function removeItem(id, itemsArr) {
-  console.log("removeItem");
   const newCollection = itemsArr.filter((item) => item !== id);
-  console.log(newCollection);
   localStorage.setItem("cameras", JSON.stringify(newCollection));
   displayProductsInCart();
 }
