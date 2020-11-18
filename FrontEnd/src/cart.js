@@ -42,6 +42,7 @@ async function displayProductsInCart() {
 
   if (productsToDisplay.length == 0) {
     totalPrice.innerText = "0";
+    localStorage.clear();
   }
 
   cameraDisplay.innerText = "";
