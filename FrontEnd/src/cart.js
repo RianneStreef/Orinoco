@@ -223,8 +223,9 @@ function postData(contact, products) {
 
   fetch("http://localhost:3000/api/cameras/order/", requestOptions)
     .then((response) => response.json())
-    .then((result) => localStorage.setItem("orderId", result.orderId))
+    .then((result) => {
+      localStorage.setItem("orderId", result.orderId);
+      window.location = "../confirmation/index.html";
+    })
     .catch((error) => console.log("error", error));
 }
-
-// window.location = "../confirmation/index.html";
