@@ -14,7 +14,6 @@ window.onscroll = function () {
  */
 
 let itemsInCart = JSON.parse(localStorage.getItem("cameras"));
-console.log(itemsInCart);
 
 async function productsInCart() {
   if (!itemsInCart) {
@@ -39,16 +38,12 @@ const cameraDisplay = document.getElementById("selectedItems");
  */
 async function displayProductsInCart() {
   itemsInCart = JSON.parse(localStorage.getItem("cameras"));
-  console.log(itemsInCart);
-  console.log(typeof itemsInCart);
-
   let productsToDisplay = await productsInCart();
 
   if (productsToDisplay.length == 0) {
-    console.log("no items in cart");
     totalPrice.innerText = "0";
-    return null;
   }
+
   cameraDisplay.innerText = "";
   for (let camera of productsToDisplay) {
     const name = camera.name;
@@ -180,7 +175,6 @@ submitOrderButton.addEventListener("click", (event) => {
   event.preventDefault();
   let contact = createContact();
 
-  console.log(contact);
   postData(contact, itemsInCart);
 });
 
@@ -195,7 +189,6 @@ function createContact() {
   const contact = {};
   for (let i = 0; i < elements.length; i++) {
     const currentElement = elements[i];
-    console.log(elements[i]);
     if (currentElement.nodeName === "INPUT") {
       contact[currentElement.name] = currentElement.value;
     }
