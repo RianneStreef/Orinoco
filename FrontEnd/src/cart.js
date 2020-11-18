@@ -225,7 +225,6 @@ function postData(contact, products) {
     .then((response) => response.json())
     .then((result) => localStorage.setItem("orderId", result.orderId))
     .catch((error) => console.log("error", error));
-  // why does this trow an error, but if I change it above, it does work..
-  // console.log(result.orderId);
-  window.location = "../confirmation/index.html";
 }
+
+// window.location = "../confirmation/index.html";
