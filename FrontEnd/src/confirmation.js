@@ -1,7 +1,5 @@
 import changeHeaderClass from "./header.js";
 
-let header = document.getElementById("header");
-
 window.onscroll = function () {
   changeHeaderClass();
 };

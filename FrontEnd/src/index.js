@@ -1,8 +1,6 @@
 import changeHeaderClass from "./header.js";
 import cameraService from "./cameraService.js";
 
-let header = document.getElementById("header");
-
 window.onscroll = function () {
   changeHeaderClass();
 };
