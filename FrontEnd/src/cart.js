@@ -164,7 +164,7 @@ emptyCartButton.onclick = () => {
  * @returns {Object}
  */
 
-const contactForm = document.getElementById("contactFrom");
+const contactForm = document.getElementById("contact-form");
 
 console.log(contactForm);
 
@@ -182,7 +182,7 @@ contactForm.addEventListener("submit", (event) => {
  */
 
 function createContact() {
-  let elements = document.getElementById("contactForm").elements;
+  let elements = document.getElementById("contact-form").elements;
   const contact = {};
   for (let i = 0; i < elements.length; i++) {
     const currentElement = elements[i];
