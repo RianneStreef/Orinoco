@@ -166,6 +166,8 @@ emptyCartButton.onclick = () => {
 
 const contactForm = document.getElementById("contactFrom");
 
+console.log(contactForm);
+
 contactForm.addEventListener("submit", (event) => {
   event.preventDefault();
   let contact = createContact();
