@@ -98,6 +98,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   padding: 1.2em;
+  font-size: 0.8em;
 }
 .product-card__text .button {
   margin: 0;
@@ -143,7 +144,7 @@ h1 {
 }
 
 .formCard {
-  width: 70%;
+  width: 90%;
 }
 
 .cartContainer {
@@ -196,7 +197,7 @@ h1 {
 
 .lenseMenu {
   font-weight: 1000;
-  margin-bottom: 5px;
+  margin: 10px, 0;
 }
 
 .detailImage {
@@ -234,6 +235,10 @@ h1 {
 
 .total-price:before {
   content: "$ ";
+}
+
+.hide {
+  display: none;
 }
 
 .form {
@@ -338,6 +343,10 @@ h1 {
 
   .detailImage {
     margin-top: 5%;
+  }
+
+  .formCard {
+    width: 70%;
   }
 
   .footer {

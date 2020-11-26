@@ -38,6 +38,12 @@ async function displayProductsInCart() {
   itemsInCart = JSON.parse(localStorage.getItem("cameras"));
   let productsToDisplay = await productsInCart();
 
+  if (!productsToDisplay) {
+    totalPrice.innerText = "0";
+    localStorage.clear();
+    return null;
+  }
+
   if (productsToDisplay.length == 0) {
     totalPrice.innerText = "0";
     localStorage.clear();
@@ -127,12 +133,6 @@ async function displayProductsInCart() {
 displayProductsInCart();
 
 /**
- * Get localStorage to check against selected Id
- * @param {*} id
- * @returns {Array} New list of items to put in localStorage
- */
-
-/**
  * Filter out the id that has to be removed
  *
  * @param {string} id
@@ -164,16 +164,12 @@ emptyCartButton.onclick = () => {
  * @returns {Object}
  */
 
-const submitOrderButton = document.getElementById("submit-button");
+const contactForm = document.getElementById("contactFrom");
 
-// 1: Delete function
-// 2: Then add arrow after (), parentheses or parameters
-// 3: Optional:
-
-submitOrderButton.addEventListener("click", (event) => {
+contactForm.addEventListener("submit", (event) => {
   event.preventDefault();
   let contact = createContact();
-
+  console.log(contact);
   postData(contact, itemsInCart);
 });
 
@@ -192,6 +188,7 @@ function createContact() {
       contact[currentElement.name] = currentElement.value;
     }
   }
+  console.log(contact);
   return contact;
 }
 
