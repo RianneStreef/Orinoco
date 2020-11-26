@@ -229,7 +229,7 @@ h1 {
   justify-content: space-between;
   margin: 10px 0;
   &__img {
-    width: 10%;
+    width: 20%;
   }
   &__price {
     &:before {
@@ -370,6 +370,12 @@ h1 {
     min-height: 500px;
     background-size: cover;
     background-position-y: -600px;
+  }
+
+  .cart-card {
+    &__img {
+      width: 10%;
+    }
   }
 
   .footer {

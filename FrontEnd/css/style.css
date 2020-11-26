@@ -227,7 +227,7 @@ h1 {
   margin: 10px 0;
 }
 .cart-card__img {
-  width: 10%;
+  width: 20%;
 }
 .cart-card__price:before {
   content: "$ ";
@@ -359,6 +359,10 @@ h1 {
     min-height: 500px;
     background-size: cover;
     background-position-y: -600px;
+  }
+
+  .cart-card__img {
+    width: 10%;
   }
 
   .footer {
