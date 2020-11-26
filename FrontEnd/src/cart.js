@@ -171,7 +171,6 @@ console.log(contactForm);
 contactForm.addEventListener("submit", (event) => {
   event.preventDefault();
   let contact = createContact();
-  console.log(contact);
   postData(contact, itemsInCart);
 });
 
@@ -190,7 +189,6 @@ function createContact() {
       contact[currentElement.name] = currentElement.value;
     }
   }
-  console.log(contact);
   return contact;
 }
 
