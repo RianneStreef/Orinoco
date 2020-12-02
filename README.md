@@ -6,7 +6,7 @@
 * [Setup](#setup)
 
 ## General info
-This project is the 5th project of my web developer course from OpenClassrooms
+This project is the 5th project of my web developer course from OpenClassrooms. It is a webshop for vintage cameras. 
 	
 ## Technologies
 Project is created with:
